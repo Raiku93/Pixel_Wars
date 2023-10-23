@@ -28,6 +28,17 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 
+CORS_ALLOW_ALL_ORIGINS = False
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:8000",  # Ajoutez ici votre domaine ou adresse IP
+    "https://votre-domaine.com",
+    # Autres domaines autorisés
+]
+
+CORS_ALLOW_WS_ORIGIN = True  # Autorise les connexions WebSocket depuis les domaines autorisés
+
+
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -37,7 +48,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'App_Pixelwars'
+    'channels',
+    'corsheaders',
+    'App_Pixelwars',
+
 ]
 
 MIDDLEWARE = [
@@ -48,6 +62,25 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+]
+
+ASGI_APPLICATION = 'PixelWars.routing.application'
+
+
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [('127.0.0.1', 6379)],
+        },
+        'ROUTING': 'PixelWars.routing.channel_routing',
+
+    },
+}
+
+# Configurez les autorisations CORS pour les connexions WebSocket
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",  # L'URL de votre application front-end
 ]
 
 ROOT_URLCONF = 'PixelWars.urls'
@@ -124,3 +157,8 @@ STATIC_URL = '/static/'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+
+
+

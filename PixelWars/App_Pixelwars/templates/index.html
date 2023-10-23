@@ -1,36 +1,149 @@
-<!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Pixels War</title>
     <style>
         .pixel-container {
             display: grid;
-            grid-template-columns: repeat(130, 5px); /
-            grid-template-rows: repeat(50, 5px); /
-            gap: 1px; /* Espacement entre les pixels */
+            grid-template-columns: repeat(130, 5px);
+            grid-template-rows: repeat(50, 5px);
+            gap: 1px;
         }
 
         .pixel {
             width: 5px;
             height: 5px;
-            background-color: transparent; /* Couleur de fond transparente par défaut */
-            border: 1px solid rgba(0, 0, 0, 0.2);  /* Bordure grise légèrement transparente */
+            background-color: transparent;
+            border: 1px solid rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            position: relative;
+        }
+
+        .color-picker-form {
+            display: none;
+            position: absolute;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            padding: 10px;
+            z-index: 2;
+        }
+
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1;
         }
     </style>
 </head>
+
 <body>
     <table>
         <tr>
             <td>
                 <div class="pixel-container">
                     {% for pixel in pixels %}
-                        <div class="pixel" style="background-color: {{ pixel.color }}"></div>
+                    <div class="pixel" style="background-color: {{ pixel.color }}" onclick="showColorPicker(event, {{ pixel.id }})"></div>
+                    <div id="color-picker-{{ pixel.id }}" class="color-picker-form">
+                        <input type="color" id="color-{{ pixel.id }}">
+                        <button onclick="changePixelColor({{ pixel.id }})">Valider</button>
+                        <button onclick="cancelColorPicker({{ pixel.id }})">Annuler</button>
+                    </div>
                     {% endfor %}
                 </div>
             </td>
         </tr>
     </table>
-</body>
-</html>
 
+    <div id="overlay" class="overlay"></div>
+
+    <script>
+    
+    
+        // Créez la connexion WebSocket en dehors de la fonction send
+     const socket = new WebSocket('ws://127.0.0.1:8000/ws/some_path/');
+
+
+   
+
+    socket.onmessage = (event) => {
+        const data = JSON.parse(event.data);
+        // Mettez à jour l'interface utilisateur avec la nouvelle couleur reçue du serveur WebSocket
+        const pixelId = data.pixel_id;
+        const newColor = data.color;
+        const pixelElement = document.getElementById(`pixel-${pixelId}`);
+        pixelElement.style.backgroundColor = newColor;
+    };
+
+    function changePixelColor(pixelId) {
+        const colorPicker = document.getElementById(`color-${pixelId}`);
+        const newColor = colorPicker.value;
+
+        // Envoyez les données au serveur via WebSocket
+        socket.send(JSON.stringify({
+            'pixel_id': pixelId,
+            'color': newColor,
+        }));
+    }
+
+  
+
+    		
+    
+    
+        function showColorPicker(event, pixelId) {
+            const colorPickerForm = document.getElementById(`color-picker-${pixelId}`);
+            const overlay = document.getElementById('overlay');
+            overlay.style.display = 'block';
+            const centerX = window.innerWidth / 2 - colorPickerForm.offsetWidth / 2;
+            const centerY = window.innerHeight / 2 - colorPickerForm.offsetHeight / 2;
+            colorPickerForm.style.top = `${centerY}px`;
+            colorPickerForm.style.left = `${centerX}px`;
+            colorPickerForm.style.display = 'block';
+        }
+
+        function cancelColorPicker(pixelId) {
+            document.getElementById(`color-picker-${pixelId}`).style.display = 'none';
+            document.getElementById('overlay').style.display = 'none';
+        }
+
+       
+
+        function changePixelColor(pixelId) {
+            const colorPicker = document.getElementById(`color-${pixelId}`);
+            const newColor = colorPicker.value;
+
+            fetch(`/update_pixel_color/${pixelId}/`, {
+                    method: 'POST',
+                    body: `color=${encodeURIComponent(newColor)}`,
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                        'X-CSRFToken': getCookie('csrftoken')
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data.message);
+                })
+                .catch(error => {
+                    console.error('Erreur lors de la mise à jour de la couleur du pixel :', error);
+                });
+
+            document.getElementById(`color-picker-${pixelId}`).style.display = 'none';
+            document.getElementById('overlay').style.display = 'none';
+        }
+
+        function getCookie(name) {
+            const value = `; ${document.cookie}`;
+            const parts = value.split(`; ${name}=`);
+            if (parts.length === 2) return parts.pop().split(';').shift();
+        }
+    </script>
+</body>
+
+</html>
