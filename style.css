@@ -1,0 +1,53 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f8f8f8;
+    color: #333;
+}
+
+.header {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 20px;
+}
+
+.title {
+    font-size: 2em;
+    margin: 0;
+}
+
+.presentation, .jeu {
+    padding: 40px 20px;
+    text-align: center;
+}
+
+.container {
+    max-width: 800px;
+    margin: auto;
+}
+
+.presentation {
+    background-color: #e0e0e0;
+}
+
+.presentation p {
+    font-size: 1.2em;
+}
+
+.jeu-container {
+    border: 2px solid #333;
+    background-color: #fff;
+    height: 400px;
+}
+
+.footer {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 10px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
