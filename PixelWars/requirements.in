@@ -1,0 +1,8 @@
+aiosmb==0.2.50
+crackmapexec==5.2.2
+graphene-sqlalchemy==2.1.2
+minikerberos==0.2.14
+patator==0.9
+pytz-deprecation-shim==0.1.0.post0
+spyse-python==2.2.3
+

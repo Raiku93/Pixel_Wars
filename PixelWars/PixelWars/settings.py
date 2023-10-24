@@ -73,10 +73,9 @@ CHANNEL_LAYERS = {
         'CONFIG': {
             "hosts": [('127.0.0.1', 6379)],
         },
-        'ROUTING': 'PixelWars.routing.channel_routing',
-
     },
 }
+
 
 # Configurez les autorisations CORS pour les connexions WebSocket
 CORS_ALLOWED_ORIGINS = [

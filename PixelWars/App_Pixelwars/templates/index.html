@@ -48,7 +48,7 @@
             <td>
                 <div class="pixel-container">
                     {% for pixel in pixels %}
-                    <div class="pixel" style="background-color: {{ pixel.color }}" onclick="showColorPicker(event, {{ pixel.id }})"></div>
+                    <div id="pixel-{{ pixel.id }}" class="pixel" style="background-color: {{ pixel.color }}" onclick="showColorPicker(event, {{ pixel.id }})"></div>
                     <div id="color-picker-{{ pixel.id }}" class="color-picker-form">
                         <input type="color" id="color-{{ pixel.id }}">
                         <button onclick="changePixelColor({{ pixel.id }})">Valider</button>
@@ -63,39 +63,16 @@
     <div id="overlay" class="overlay"></div>
 
     <script>
-    
-    
-        // Créez la connexion WebSocket en dehors de la fonction send
-     const socket = new WebSocket('ws://127.0.0.1:8000/ws/some_path/');
+        const socket = new WebSocket('ws://127.0.0.1:8000/ws/some_path/');
 
+        socket.onmessage = (event) => {
+            const data = JSON.parse(event.data);
+            const pixelId = data.pixel_id;
+            const newColor = data.color;
+            const pixelElement = document.getElementById(`pixel-${pixelId}`);
+            pixelElement.style.backgroundColor = newColor;
+        };
 
-   
-
-    socket.onmessage = (event) => {
-        const data = JSON.parse(event.data);
-        // Mettez à jour l'interface utilisateur avec la nouvelle couleur reçue du serveur WebSocket
-        const pixelId = data.pixel_id;
-        const newColor = data.color;
-        const pixelElement = document.getElementById(`pixel-${pixelId}`);
-        pixelElement.style.backgroundColor = newColor;
-    };
-
-    function changePixelColor(pixelId) {
-        const colorPicker = document.getElementById(`color-${pixelId}`);
-        const newColor = colorPicker.value;
-
-        // Envoyez les données au serveur via WebSocket
-        socket.send(JSON.stringify({
-            'pixel_id': pixelId,
-            'color': newColor,
-        }));
-    }
-
-  
-
-    		
-    
-    
         function showColorPicker(event, pixelId) {
             const colorPickerForm = document.getElementById(`color-picker-${pixelId}`);
             const overlay = document.getElementById('overlay');
@@ -112,31 +89,23 @@
             document.getElementById('overlay').style.display = 'none';
         }
 
-       
+    function changePixelColor(pixelId) {
+        const colorPickerForm = document.getElementById(`color-picker-${pixelId}`);
+        const overlay = document.getElementById('overlay');
+        
+        const colorPicker = document.getElementById(`color-${pixelId}`);
+        const newColor = colorPicker.value;
 
-        function changePixelColor(pixelId) {
-            const colorPicker = document.getElementById(`color-${pixelId}`);
-            const newColor = colorPicker.value;
+        // Envoyez les données au serveur via WebSocket
+        socket.send(JSON.stringify({
+            'pixel_id': pixelId,
+            'color': newColor,
+        }));
 
-            fetch(`/update_pixel_color/${pixelId}/`, {
-                    method: 'POST',
-                    body: `color=${encodeURIComponent(newColor)}`,
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded',
-                        'X-CSRFToken': getCookie('csrftoken')
-                    }
-                })
-                .then(response => response.json())
-                .then(data => {
-                    console.log(data.message);
-                })
-                .catch(error => {
-                    console.error('Erreur lors de la mise à jour de la couleur du pixel :', error);
-                });
-
-            document.getElementById(`color-picker-${pixelId}`).style.display = 'none';
-            document.getElementById('overlay').style.display = 'none';
-        }
+        // Masquez le formulaire de sélection de couleur et l'overlay
+        colorPickerForm.style.display = 'none';
+        overlay.style.display = 'none';
+    }
 
         function getCookie(name) {
             const value = `; ${document.cookie}`;
@@ -147,3 +116,4 @@
 </body>
 
 </html>
+

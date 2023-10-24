@@ -1,9 +1,10 @@
+from channels.generic.websocket import AsyncWebsocketConsumer
+from channels.db import database_sync_to_async
+from App_Pixelwars.models import Pixel
 import json
 
-from channels.generic.websocket import AsyncWebsocketConsumer
-
 class PixelConsumer(AsyncWebsocketConsumer):
-
+    
     async def connect(self):
         print("WebSocket Connected")
         await self.accept()
@@ -16,11 +17,35 @@ class PixelConsumer(AsyncWebsocketConsumer):
         pixel_id = data.get('pixel_id')
         new_color = data.get('color')
 
-        # Faites le traitement nécessaire pour changer la couleur du pixel avec l'ID donné
-        # Par exemple, vous pouvez appeler une méthode pour mettre à jour la base de données ici
+        # Utilisez database_sync_to_async pour rendre l'opération de base de données asynchrone
+        pixel = await self.get_pixel_from_db(pixel_id)
+        if pixel:
+            # Mettez à jour la couleur et enregistrez le pixel dans la base de données
+            pixel.color = new_color
+            await database_sync_to_async(pixel.save)()
+            # Envoyez la nouvelle couleur à tous les clients connectés
+            await self.send_new_color_to_clients(pixel_id, new_color)
 
-        # Envoyez la nouvelle couleur à tous les clients connectés
+    async def get_pixel_from_db(self, pixel_id):
+        # Utilisez database_sync_to_async pour rendre la recherche du pixel asynchrone
+        return await database_sync_to_async(Pixel.objects.get)(id=pixel_id)
+
+    async def send_new_color_to_clients(self, pixel_id, new_color):
+        # Envoyez la nouvelle couleur à tous les clients connectés dans le groupe 'pixel_group'
+        await self.channel_layer.group_add('pixel_group', self.channel_name)
+        await self.channel_layer.group_send(
+            'pixel_group',
+            {
+                'type': 'pixel.color_updated',
+                'pixel_id': pixel_id,
+                'color': new_color,
+            }
+        )
+
+    async def pixel_color_updated(self, event):
+        # Envoyez la nouvelle couleur à tous les clients dans le groupe 'pixel_group'
         await self.send(text_data=json.dumps({
-            'pixel_id': pixel_id,
-            'color': new_color,
+            'pixel_id': event['pixel_id'],
+            'color': event['color'],
         }))
+
