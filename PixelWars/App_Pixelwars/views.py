@@ -22,3 +22,4 @@ def update_pixel_color(request, pixel_id):
     else:
         return JsonResponse({'message': 'Méthode non autorisée.'}, status=405)
 
+

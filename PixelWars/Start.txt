@@ -1,0 +1,6 @@
+
+redis-server &
+
+daphne PixelWars.asgi:application 
+
+python manage.py runserver 

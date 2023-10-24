@@ -9,8 +9,8 @@ class Command(BaseCommand):
         Pixel.objects.all().delete()
         nombre = 1
         pixels_to_create = []
-        for row in range(130):
-            for column in range(40):
+        for row in range(170):
+            for column in range(90):
                 print("Pixel", nombre, "créé !")
                 nombre = nombre+1
                 pixel = Pixel(row=row, column=column, color='#FFFFFF')
