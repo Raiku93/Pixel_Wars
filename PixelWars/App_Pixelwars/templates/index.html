@@ -1,168 +1,19 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="fr">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Project</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f8f8f8;
-            color: #333;
-        }
-
-        .header {
-            background-color: #333;
-            color: #fff;
-            text-align: center;
-            padding: 20px;
-        }
-
-        .title {
-            font-size: 2em;
-            margin: 0;
-        }
-
-        .container {
-            max-width: 800px;
-            margin: auto;
-            padding: 20px;
-        }
-
-        .presentation {
-            background-color: #e0e0e0;
-            text-align: center;
-            padding: 10px;
-        }
-
-        .presentation p {
-            font-size: 1.2em;
-        }
-
-	.jeu-container {
-    		margin: auto;
-    		display: flex;
-		justify-content: center;
-  		align-items: center;
-	}
-
-
-        .footer {
-            background-color: #333;
-            color: #fff;
-            text-align: center;
-            padding: 5px;
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-        }
-
- 
-        .pixel-container {
-            display: grid;
-            grid-template-columns: repeat(180, 5px);
-            grid-template-rows: repeat(50, 5px);
-            gap: 1px;
-        }
-
-        .pixel {
-            width: 5px;
-            height: 5px;
-            background-color: transparent;
-            border: 1px solid rgba(0, 0, 0, 0.2);
-            cursor: pointer;
-            position: relative;
-        }
-
-        .color-picker-form {
-            display: none;
-            position: absolute;
-            background-color: #fff;
-            border: 1px solid #ccc;
-            padding: 10px;
-            z-index: 2;
-        }
-
-        .overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            z-index: 1;
-        }
-        
-        
-        
-        
-        body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f8f8f8;
-    color: #333;
-}
-
-.loader-wrapper {
-    position: fixed;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(255, 255, 255, 0.9);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 9999;
-}
-
-.loader {
-    border: 5px solid #f3f3f3;
-    border-top: 5px solid #3498db;
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    animation: spin 2s linear infinite;
-}
-
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-
-
-.battle-title {
-    /* Votre style de texte par défaut ici */
-    color: #333;
-    transition: color 0.5s ease; /* Animation de transition de couleur sur 0.5 seconde */
-}
-
-.updated {
-    color: red; /* Changez la couleur du texte en rouge */
-    animation: shake 0.5s ease infinite; /* Ajoutez l'animation de tremblement */
-}
-
-@keyframes shake {
-    0% { transform: translateX(0); }
-    25% { transform: translateX(-5px); }
-    50% { transform: translateX(5px); }
-    75% { transform: translateX(-5px); }
-    100% { transform: translateX(5px); }
-}
-
-
-/* Masquer l'écran de chargement une fois que tous les éléments sont chargés */
-body.loaded .loader-wrapper {
-    display: none;
-}
-
-    </style>
+    <title>PixelWars ∞</title>
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
 </head>
 
 <body>
+    <div class="loader-wrapper">
+        <div class="loader"></div>
+    </div>
+
     <div class="header">
         <h1 class="title">PixelWars ∞</h1>
     </div>
@@ -170,21 +21,21 @@ body.loaded .loader-wrapper {
     <section class="presentation">
         <div class="container">
             <h2>Présentation</h2>
-<p>Marre d'attendre tous les 10 ans pour déclencher un PixelWar épique ?  <br>
-Plongez dans notre univers pixelisé où les guerres de pixels ne prennent jamais fin (tant que notre machine qui l'héberge ne sature pas...) <br>
-(Un peu d'éthique svp, on veut pas se faire ban)</p>
-
+            <p>Marre d'attendre tous les 10 ans pour déclencher un PixelWar épique ? <br>
+                Plongez dans notre univers pixelisé où les guerres de pixels ne prennent jamais fin (tant que notre
+                machine qui l'héberge ne sature pas...) <br>
+                (Un peu d'éthique svp, on veut pas se faire ban)</p>
         </div>
     </section>
 
     <section class="jeu">
         <div class="container">
-           <h2 class="battle-title {% if pixelUpdated %}updated{% endif %}">Battez-vous !</h2>
+            <h2 class="battle-title {% if pixelUpdated %}updated{% endif %}">Battez-vous !</h2>
             <div class="jeu-container">
-                <!-- Contenu du jeu va ici -->
                 <div class="pixel-container">
                     {% for pixel in pixels %}
-                    <div id="pixel-{{ pixel.id }}" class="pixel" style="background-color: {{ pixel.color }}" onclick="showColorPicker(event, {{ pixel.id }})"></div>
+                    <div id="pixel-{{ pixel.id }}" class="pixel" style="background-color: {{ pixel.color }}"
+                        onclick="showColorPicker(event, {{ pixel.id }})"></div>
                     <div id="color-picker-{{ pixel.id }}" class="color-picker-form">
                         <input type="color" id="color-{{ pixel.id }}">
                         <button onclick="changePixelColor({{ pixel.id }})">Valider</button>
@@ -195,119 +46,17 @@ Plongez dans notre univers pixelisé où les guerres de pixels ne prennent jamai
             </div>
         </div>
     </section>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
+
     <footer class="footer">
         <p>&copy; 2023 PixelWars infinity. Tous droits réservés.</p>
     </footer>
 
-<body>
-    <!-- Écran de chargement -->
-    <div class="loader-wrapper">
-        <div class="loader"></div>
-    </div>
-
-    <!-- Votre contenu HTML habituel -->
-    <div class="content">
-        <!-- ... (le reste de votre contenu) ... -->
-    </div>
-
-    <script>
-        // ... (votre script JavaScript reste inchangé) ...
-    </script>
-</body>
-
-
     <div id="overlay" class="overlay"></div>
 
-    <script>
-const socket = new WebSocket('ws://192.168.1.158:8000/ws/some_path/');
-
-socket.onmessage = (event) => {
-    const data = JSON.parse(event.data);
-    const pixelId = data.pixel_id;
-    const newColor = data.color;
-    const pixelElement = document.getElementById(`pixel-${pixelId}`);
-    pixelElement.style.backgroundColor = newColor;
-
-    // Ajoutez la classe 'updated' à l'élément <h2>
-    document.querySelector('.battle-title').classList.add('updated');
-
-    // Supprimez la classe 'updated' après l'animation (0.5s)
-    setTimeout(() => {
-        document.querySelector('.battle-title').classList.remove('updated');
-    }, 500);
-};   
-        
-
-        function showColorPicker(event, pixelId) {
-     const colorPickerForm = document.getElementById(`color-picker-${pixelId}`);
-    const overlay = document.getElementById('overlay');
 
 
 
-
-
-    // Obtenez les coordonnées du clic de la souris
-    const clickX = event.clientX + window.pageXOffset + 10; // Ajoutez un décalage de 10 pixels à droite
-    const clickY = event.clientY + window.pageYOffset - 50; // Ajoutez un décalage de 10 pixels vers le bas
-
-    // Positionnez le pop-up à côté du clic de la souris
-    colorPickerForm.style.top = `${clickY}px`;
-    colorPickerForm.style.left = `${clickX}px`;
-    
-    // Affichez le pop-up et l'overlay
-    overlay.style.display = 'block';
-    colorPickerForm.style.display = 'block';
-
-            
-        }
-
-        function cancelColorPicker(pixelId) {
-            document.getElementById(`color-picker-${pixelId}`).style.display = 'none';
-            document.getElementById('overlay').style.display = 'none';
-        }
-
-        function changePixelColor(pixelId) {
-            const colorPicker = document.getElementById(`color-${pixelId}`);
-            const newColor = colorPicker.value;
-
-            // Envoyez les données au serveur via WebSocket
-            socket.send(JSON.stringify({
-                'pixel_id': pixelId,
-                'color': newColor,
-            }));
-
-            // Masquez le formulaire de sélection de couleur et l'overlay
-            document.getElementById(`color-picker-${pixelId}`).style.display = 'none';
-            document.getElementById('overlay').style.display = 'none';
-        }
-
-        function getCookie(name) {
-            const value = `; ${document.cookie}`;
-            const parts = value.split(`; ${name}=`);
-            if (parts.length === 2) return parts.pop().split(';').shift();
-        }
-        
-        
-	document.addEventListener("DOMContentLoaded", function() {
-    // Une fois que tous les éléments sont chargés, marquez le corps comme chargé
-   		 document.body.classList.add("loaded");
-	});
-
-
-        
-    </script>
+    <script src="{% static 'script.js' %}"></script>
 </body>
 
 </html>

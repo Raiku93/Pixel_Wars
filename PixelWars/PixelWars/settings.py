@@ -28,6 +28,7 @@ DEBUG = True
 ALLOWED_HOSTS = ['192.168.1.158', 'localhost', '127.0.0.1']
 
 
+
 CORS_ALLOW_ALL_ORIGINS = False
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:8000",  # Ajoutez ici votre domaine ou adresse IP
@@ -151,6 +152,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
+STATICFILES_DIRS = [BASE_DIR / "App_Pixelwars/templates/"]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
