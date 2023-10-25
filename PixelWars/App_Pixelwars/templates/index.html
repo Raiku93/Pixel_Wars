@@ -35,7 +35,7 @@
         .presentation {
             background-color: #e0e0e0;
             text-align: center;
-            padding: 40px;
+            padding: 10px;
         }
 
         .presentation p {
@@ -54,7 +54,7 @@
             background-color: #333;
             color: #fff;
             text-align: center;
-            padding: 10px;
+            padding: 5px;
             position: fixed;
             bottom: 0;
             width: 100%;
@@ -164,16 +164,15 @@ body.loaded .loader-wrapper {
 
 <body>
     <div class="header">
-        <h1 class="title">PixelWars Infinity</h1>
+        <h1 class="title">PixelWars ∞</h1>
     </div>
 
     <section class="presentation">
         <div class="container">
             <h2>Présentation</h2>
 <p>Marre d'attendre tous les 10 ans pour déclencher un PixelWar épique ?  <br>
-Plongez dans notre univers pixelisé où les guerres de pixels ne prennent jamais fin (tant que notre machine qui l'héberge ne sature pas...). <br>
-Rejoignez la bataille sans fin, explorez des couleurs éclatantes et déclenchez un chaos créatif. <br>
-(Ne faites pas de Svastika, on veut pas se faire ban)</p>
+Plongez dans notre univers pixelisé où les guerres de pixels ne prennent jamais fin (tant que notre machine qui l'héberge ne sature pas...) <br>
+(Un peu d'éthique svp, on veut pas se faire ban)</p>
 
         </div>
     </section>
@@ -232,7 +231,7 @@ Rejoignez la bataille sans fin, explorez des couleurs éclatantes et déclenchez
     <div id="overlay" class="overlay"></div>
 
     <script>
-const socket = new WebSocket('ws://127.0.0.1:8000/ws/some_path/');
+const socket = new WebSocket('ws://192.168.1.158:8000/ws/some_path/');
 
 socket.onmessage = (event) => {
     const data = JSON.parse(event.data);
