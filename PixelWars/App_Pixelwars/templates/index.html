@@ -1,71 +1,222 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="fr">
-
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PixelWars ∞</title>
+    	<div id="overlay" class="overlay"></div>
+	<div class="loader-wrapper">
+        <div class="loader"><hr/><hr/><hr/><hr/></div>
+	</div>
     <link rel="stylesheet" href="{% static 'styles.css' %}">
     <link rel="stylesheet" href="{% static 'bootstrap.min.css' %}">
+    <link rel="icon" href="{% static 'favicon.ico' %}" type="image/x-icon">
 </head>
 
-<body>
-    <div class="loader-wrapper">
-        <div class="loader"></div>
-    </div>
 
-    <div class="header">
-        <h1 class="title">PixelWars ∞</h1>
-    </div>
+<body data-spy="scroll" data-target=".navbar" data-offset="40" id="home">
 
-    <section class="presentation">
-        <div class="container">
-            <h2>Présentation</h2>
-            <p>Marre d'attendre tous les 10 ans pour déclencher un PixelWar épique ? <br>
-                Plongez dans notre univers pixelisé où les guerres de pixels ne prennent jamais fin (tant que notre
-                machine qui l'héberge ne sature pas...) <br>
-                (Un peu d'éthique svp, on veut pas se faire ban)</p>
+    <!-- Page Navigation -->
+
+
+
+    <!-- End Of Page Navigation -->
+
+    <!-- Page Header -->
+    
+<header class="header text-center">
+        <h6 class="subtitle"></h6>
+        <h1 class="title"></h1>
+        <div class="sp-container ">
+	<div class="sp-content">
+		<div class="sp-globe"></div>
+		<h2 class='frame-1'>Pixelwars ∞<br></h2>
+		<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+		<div class="wrap jouer-bouton">
+    <a href="#jeu"><button class="button">Jouer</button></a>
+		</div>  
+	
+	
+	</div>
+	</div>
+</header>
+
+    <!-- End Of Page Header -->
+    <section class="has-bg-img bg-img-2">
+        <div class="container text-center">
+              
+            
+            <h6 class="section-title mb-6">Quelques chiffres</h6>
+            <div class="widget-2">
+                <div class="widget-item">
+                    <i class="ti-cup"></i>
+                    <h6 class="title">15 300</h6>
+                    <div class="subtitle">Pixels</div>
+                </div>
+                <div class="widget-item">
+                    <i class="ti-face-smile"></i>
+                    <h6 class="title">+ 16M</h6>
+                    <div class="subtitle">Couleurs</div>
+                </div>
+                <div class="widget-item">
+                    <i class="ti-blackboard"></i>
+                    <h6 class="title"><div id="pixel-counter">0</div></h6>
+                    <div class="subtitle">Pixels posés</div>
+                </div>
+                <div class="widget-item">
+                    <i class="ti-comments-smiley"></i>
+                    <h6 class="title"><p id="welcomeMessage"></p></div>
+</h6>
+                    <div class="subtitle">
+                </div>
+            </div>
         </div>
     </section>
+    <!-- About Section with bg -->
 
-    <section class="jeu">
-        <div class="container">
-            <h2 class="battle-title {% if pixelUpdated %}updated{% endif %}">Battez-vous !</h2>
+        <div class="container" id="jeu">
             <div class="jeu-container">
                 <div class="pixel-container">
                     {% for pixel in pixels %}
                     <div id="pixel-{{ pixel.id }}" class="pixel" style="background-color: {{ pixel.color }}"
                         onclick="showColorPicker(event, {{ pixel.id }})"></div>
                     <div id="color-picker-{{ pixel.id }}" class="color-picker-form">
+                    
                         <input type="color" id="color-{{ pixel.id }}">
-                        <button onclick="changePixelColor({{ pixel.id }})">Valider</button>
-                        <button onclick="cancelColorPicker({{ pixel.id }})">Annuler</button>
+                        
+                        <button class="btn btn-success" onclick="changePixelColor({{ pixel.id }})">Valider</button>
+                        <button class="btn btn-danger" onclick="cancelColorPicker({{ pixel.id }})">Annuler</button>
                     </div>
                     {% endfor %}
                 </div>
             </div>
         </div>
+        
+        
+
+    <!-- End Of About Sectoin -->
+
+    <!-- Portfolio section -->
+    <section id="portfolio">
+        <div class="container text-center">
+<h6 class="section-subtitle" id="perlesDuJour">Les Perles du jour !</h6>
+            <h6 class="section-title mb-5"></h6>
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="img-wrapper">
+                        <img src="{% static 'nuc.jpeg' %}" alt="Download free bootstrap 4 landing page, free boootstrap 4 templates, Download free bootstrap 4.1 landing page, free boootstrap 4.1.1 templates, Creative studio Landing page">
+                        <div class="overlay">
+                            <div class="overlay-infos">
+                                <h5>Pixel Pichu</h5>
+
+                            </div>  
+                        </div>
+                    </div>
+                    <div class="img-wrapper">
+                        <img src="{% static 'palestine.jpeg' %}" alt="Download free bootstrap 4 landing page, free boootstrap 4 templates, Download free bootstrap 4.1 landing page, free boootstrap 4.1.1 templates, Creative studio Landing page">
+                        <div class="overlay">
+                            <div class="overlay-infos">
+                                <h5>Pixel Palestine</h5>
+
+                            </div>                              
+                        </div>
+                    </div>                  
+                </div>
+                <div class="col-sm-4">
+                    <div class="img-wrapper">
+                        <img src="{% static 'maroc.jpeg' %}" alt="Download free bootstrap 4 landing page, free boootstrap 4 templates, Download free bootstrap 4.1 landing page, free boootstrap 4.1.1 templates, Creative studio Landing page">
+                        <div class="overlay">
+                            <div class="overlay-infos">
+                                <h5>Pixel Maroc</h5>
+
+                            </div>  
+                        </div>
+                    </div>
+                    <div class="img-wrapper">
+                        <img src="{% static 'tank.jpeg' %}" alt="Download free bootstrap 4 landing page, free boootstrap 4 templates, Download free bootstrap 4.1 landing page, free boootstrap 4.1.1 templates, Creative studio Landing page">
+                        <div class="overlay">
+                            <div class="overlay-infos">
+                                <h5>Pixel Pikachu</h5>
+
+                            </div>                              
+                        </div>
+                    </div>                  
+                </div>
+                <div class="col-sm-4">
+                    <div class="img-wrapper">
+                        <img src="{% static 'tank.jpeg' %}" alt="Download free bootstrap 4 landing page, free boootstrap 4 templates, Download free bootstrap 4.1 landing page, free boootstrap 4.1.1 templates, Creative studio Landing page">
+                        <div class="overlay">
+                            <div class="overlay-infos">
+                                <h5>Pixel Pikachu</h5>
+
+                            </div>  
+                        </div>
+                    </div>
+                    <div class="img-wrapper">
+                        <img src="{% static 'tank.jpeg' %}" alt="Download free bootstrap 4 landing page, free boootstrap 4 templates, Download free bootstrap 4.1 landing page, free boootstrap 4.1.1 templates, Creative studio Landing page">
+                        <div class="overlay">
+                            <div class="overlay-infos">
+                                <h5>Pixel Pikachu</h5>
+          
+                            </div>                              
+                        </div>
+                    </div>                  
+                </div>
+            </div>
+        </div>
     </section>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-    <footer class="footer">
-        <p>&copy; 2023 PixelWars infinity. Tous droits réservés.</p>
-    </footer>
+    
+    <!-- End of portfolio section -->
+    
 
-    <div id="overlay" class="overlay"></div>
+    
 
+    <!--  Section Jeux -->
+
+
+<footer class="bg-dark text-light text-center">
+ <div class="container-fluid">
+        <div class="row">
+    
+
+            <div class="col-sm-12 col-md-4">
+                <h3>Technologies Utilisées</h3><hr>
+                    Django<br>
+                    JavaScript<br>
+                    WebSocket<br>
+                    HTML<br>
+                    CSS<br>
+                    Bootstrap<br>
+                    <a href="https://github.com/Raiku93/Pixel_Wars/tree/main/PixelWars" target="_blank">Projet GitHub</a>
+            </div>
+            
+            
+                    <div class="col-sm-6 col-md-4">
+                <h3>À Propos de PixelWars ∞</h3><hr>
+                <p class="text-justify">PixelWars ∞ est un jeu créatif en ligne où les joueurs peuvent collaborer pour créer un monde pixelisé. Ce projet a été réalisé dans le cadre d'un projet par les développeurs Walid, Hakim, Adam et Mame Khady. L'objectif de PixelWars ∞ est de permettre aux joueurs de s'exprimer artistiquement et de s'affronter en sabotant ou en participant à la création de chef d'oeuvre.</p>
+            </div>
+
+            <div class="col-sm-12 col-md-4">
+                <h3>Développeurs</h3><hr>
+                    Walid<br>
+                    Hakim<br>
+                    Adam<br>
+                    Mame Khady<br>
+            </div>
+        </div>
+        <hr>
+        <p>&copy; 2023 Pixelwars ∞. Tous droits réservés.</p>
+    </div>
+</footer>
+
+
+</body>
+</html>
 
 
 
     <script src="{% static 'script.js' %}"></script>
     <script src="{% static 'jquery-3.4.1.min.js' %}"></script>
     <script src="{% static 'bootstrap.min.js' %}"></script>
-</body>
-
-</html>
 
