@@ -34,22 +34,22 @@ function showColorPicker(event, pixelId) {
     colorPicker.value = currentColor;
 
     const colorPickerForm = document.getElementById(`color-picker-${pixelId}`);
-    const overlay = document.getElementById('overlay');
-
+    const overlay = document.getElementById('overlay-modal');
+    overlay.style.display = 'block';
     const clickX = event.clientX + window.pageXOffset ;
     const clickY = event.clientY + window.pageYOffset - 50;
 
     colorPickerForm.style.top = `${clickY}px`;
     colorPickerForm.style.left = `${clickX}px`;
 
-    overlay.style.display = 'block';
+
     colorPickerForm.style.display = 'block';
 }
 
 
 function cancelColorPicker(pixelId) {
     document.getElementById(`color-picker-${pixelId}`).style.display = 'none';
-    document.getElementById('overlay').style.display = 'none';
+    document.getElementById('overlay-modal').style.display = 'none';
 }
 
 
@@ -75,7 +75,7 @@ function changePixelColor(pixelId) {
     document.getElementById('pixel-counter').textContent = pixelCounter;
 
     document.getElementById(`color-picker-${pixelId}`).style.display = 'none';
-    document.getElementById('overlay').style.display = 'none';
+    document.getElementById('overlay-modal').style.display = 'none';
 
 }
 
