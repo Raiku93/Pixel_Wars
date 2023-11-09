@@ -17,17 +17,17 @@ class PixelConsumer(AsyncWebsocketConsumer):
         pixel_id = data.get('pixel_id')
         new_color = data.get('color')
 
-        # Utilisez database_sync_to_async pour rendre l'opération de base de données asynchrone
+        # Utiliser database_sync_to_async pour rendre l'opération de base de données asynchrone
         pixel = await self.get_pixel_from_db(pixel_id)
         if pixel:
-            # Mettez à jour la couleur et enregistrez le pixel dans la base de données
+            # Mettre à jour la couleur et enregistrez le pixel dans la base de données
             pixel.color = new_color
             await database_sync_to_async(pixel.save)()
-            # Envoyez la nouvelle couleur à tous les clients connectés
+            # Envoyer la nouvelle couleur à tous les clients connectés
             await self.send_new_color_to_clients(pixel_id, new_color)
 
     async def get_pixel_from_db(self, pixel_id):
-        # Utilisez database_sync_to_async pour rendre la recherche du pixel asynchrone
+        # Utiliser database_sync_to_async pour rendre la recherche du pixel asynchrone
         return await database_sync_to_async(Pixel.objects.get)(id=pixel_id)
 
     async def send_new_color_to_clients(self, pixel_id, new_color):
@@ -43,7 +43,7 @@ class PixelConsumer(AsyncWebsocketConsumer):
         )
 
     async def pixel_color_updated(self, event):
-        # Envoyez la nouvelle couleur à tous les clients dans le groupe 'pixel_group'
+        # Envoyer la nouvelle couleur à tous les clients dans le groupe 'pixel_group'
         await self.send(text_data=json.dumps({
             'pixel_id': event['pixel_id'],
             'color': event['color'],

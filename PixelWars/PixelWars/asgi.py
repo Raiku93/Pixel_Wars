@@ -7,7 +7,6 @@ application = ProtocolTypeRouter({
     "websocket": URLRouter(
         [
             path("ws/some_path/", consumers.PixelConsumer.as_asgi()),
-            # Ajoutez d'autres routes WebSocket ici si nécessaire
         ]
     ),
 })

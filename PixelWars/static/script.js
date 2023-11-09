@@ -1,7 +1,6 @@
 //const socket = new WebSocket('ws://10.100.12.221:8000/ws/some_path/');
 const socket = new WebSocket('ws://192.168.1.179:8000/ws/some_path/');
 //10.100.12.221 Université
-//192.168.1.158 Maison 
 //192.168.1.179 Maison 
 
 
@@ -133,32 +132,6 @@ imagePreview.addEventListener('drag', function(event) {
     imagePreview.style.top = mouseY + 'px';
 });
 
-// Gestion de l'événement lorsqu'un fichier est sélectionné
-const fileInput = document.getElementById('fileInput');
-fileInput.addEventListener('change', function(event) {
-    const file = event.target.files[0];
-    const reader = new FileReader();
-
-    reader.readAsDataURL(file);
-    
-    reader.onload = function() {
-        // Affichage de l'image prévisualisée
-        imagePreview.src = reader.result;
-        
-        // Rendre l'image légèrement transparente
-        imagePreview.style.opacity = '0.8';
-
-        // Activer le glisser-déposer
-        imagePreview.draggable = true;
-        
-        // Supprimer l'image prévisualisée lors du clic sur le bouton Supprimer
-        deleteButton.addEventListener('click', function() {
-            imagePreview.src = '';
-            fileInput.value = ''; // Effacer la sélection de fichier
-            imagePreview.style.opacity = '1'; // Restaurer l'opacité
-        });
-    };
-});
 
 
 
@@ -175,26 +148,6 @@ fileInput.addEventListener('change', function(event) {
 
 
 
-
-$(function() {
-    $('a.page-scroll').bind('click', function(event) {
-        var $anchor = $(this);
-        $('html, body').stop().animate({
-            scrollTop: $($anchor.attr('href')).offset().top
-        }, 1500, 'easeInOutExpo');
-        event.preventDefault();
-    });
-});
-
-// Highlight the top nav as scrolling occurs
-$('body').scrollspy({
-    target: '.navbar-fixed-top'
-})
-
-// Closes the Responsive Menu on Menu Item Click
-$('.navbar-collapse ul li a').click(function() {
-    $('.navbar-toggle:visible').click();
-});
 
 
 

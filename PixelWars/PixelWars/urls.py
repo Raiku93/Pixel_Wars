@@ -16,5 +16,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.index, name='index'),
     path('update_pixel_color/<int:pixel_id>/', views.update_pixel_color, name='update_pixel_color'),
+    
 ]
 
