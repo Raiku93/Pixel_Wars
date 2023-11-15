@@ -1,6 +1,10 @@
 # Pixelwars
 Pixelwars est un jeu multijoueur de dessin en pixel en temps réel.
 
+
+## Conseil
+Le projet est contenu dans le répertoire Pixelwars. Les fichiers hors de ce répertoire servent uniquement à comprendre l'évolution et le développement de ce projet.
+
 ## Prérequis
 Avant de commencer, assurez-vous d'avoir Python, Django, Redis et virtualenv (venv et généralement présent pas défaut) installés sur votre système.
 
