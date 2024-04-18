@@ -1,5 +1,4 @@
 aiosmb==0.2.50
-crackmapexec==5.2.2
 graphene-sqlalchemy==2.1.2
 minikerberos==0.2.14
 patator==0.9
