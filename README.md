@@ -18,7 +18,7 @@ git clone https://github.com/Raiku93/Pixel_Wars.git
 Accédez au répertoire du projet :
 
 ```
-cd Pixelwars
+cd Pixel_Wars
 ```
 Créez un environnement virtuel :
 
