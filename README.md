@@ -13,7 +13,7 @@ Avant de commencer, assurez-vous d'avoir Python, Django, Redis et virtualenv (ve
 Clonez le dépôt :
 
 ```
-git clone https://github.com/votre-utilisateur/Pixel_Wars.git
+git clone https://github.com/Raiku93/Pixel_Wars.git
 ```
 Accédez au répertoire du projet :
 
