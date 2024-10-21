@@ -51,12 +51,7 @@ python manage.py migrate
 Initialiser la base de données de données :
 
 ```
-populate_pixels.py
-```
-
-Pour trouver l'adresse IP de votre serveur :
-
-#### Pour Windows
+python manage.py populate_pixels
 
 ```
 ipconfig
